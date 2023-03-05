@@ -1,20 +1,61 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import React from "react";
+import { View, Button, StyleSheet } from "react-native";
 
-export default function App() {
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{
+            title: "User",
+          }}
+          name="User"
+          component={User}
+        />
+        <Stack.Screen
+          options={{
+            title: "User Details",
+          }}
+          name="UserDetails"
+          component={UserDetails}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+export default App;
+
+const User = (props) => {
+  const goToUserDetails = () => {
+    props.navigation.navigate("UserDetails");
+  };
+  return (
+    <View style={styles.screen}>
+      <Button onPress={goToUserDetails} title="Go User Details" />
     </View>
   );
-}
+};
+const UserDetails = (props) => {
+  const goBack = () => {
+    props.navigation.goBack();
+  };
+  return (
+    <View style={styles.screen}>
+      <Button onPress={goBack} title="Go Back" />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    paddingHorizontal: 20,
   },
 });
